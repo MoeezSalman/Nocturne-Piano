@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-accent="gold">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; font-src 'self'"
+    />
+    <title>Nocturne Piano</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="vendor/Midi.js"></script>
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="topbar" id="topbar">
+        <div class="brand" title="Nocturne Piano">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <defs>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--accent-hi)" />
+                <stop offset="1" stop-color="var(--accent-lo)" />
+              </linearGradient>
+            </defs>
+            <path d="M8 31.5c0-12 5-22.5 17-24.5 4.6-.8 7.5 2.2 7 6-.6 4.6-5.6 6-7.6 10.3-1.6 3.4-.3 8.2-.3 8.2z" fill="url(#gold)" />
+            <path d="M8 31.5h17" stroke="url(#gold)" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M11 34.5h11" stroke="url(#gold)" stroke-width="1.6" stroke-linecap="round" opacity=".6" />
+            <circle cx="27.5" cy="12.5" r="1.8" fill="#0b0b0e" />
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">Nocturne</span>
+            <span class="brand-sub">Virtual Grand Piano</span>
+          </div>
+        </div>
+
+        <div class="volume" id="volume" role="slider" tabindex="0" aria-label="Master volume" aria-valuemin="0" aria-valuemax="100">
+          <div class="volume-ticks"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="volume-track"><div class="volume-fill" id="volume-fill"></div></div>
+          <div class="volume-value" id="volume-value">80</div>
+        </div>
+
+        <div class="lcd" id="lcd">
+          <button class="lcd-screen" id="lcd-screen" title="Change instrument">
+            <span class="lcd-row lcd-prev" id="lcd-prev"></span>
+            <span class="lcd-row lcd-cur" id="lcd-cur"></span>
+            <span class="lcd-row lcd-next" id="lcd-next"></span>
+            <span class="lcd-load" id="lcd-load"></span>
+          </button>
+          <div class="lcd-arrows">
+            <button class="icon-btn tiny" id="inst-prev" title="Previous instrument (←)"></button>
+            <button class="icon-btn tiny" id="inst-next" title="Next instrument (→)"></button>
+          </div>
+        </div>
+
+        <nav class="toolbar" id="toolbar" aria-label="Tools"></nav>
+
+        <div class="topbar-fill"></div>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </header>
+
+      <div class="drawer-layer" id="drawers"></div>
+
+      <main class="stage" id="stage">
+        <canvas class="viz" id="viz"></canvas>
+        <div class="beat-flash" id="beat-flash"></div>
+        <div class="chord-display" id="chord-display"><div class="cd-name" id="cd-name"></div><div class="cd-label" id="cd-label"></div></div>
+        <div class="hero" id="hero">
+          <div class="hero-kicker" id="hero-kicker">Now playing</div>
+          <div class="hero-title" id="hero-title">Concert Grand Piano</div>
+          <div class="hero-hint" id="hero-hint"></div>
+        </div>
+        <section class="song-hud" id="song-hud" hidden></section>
+        <section class="notepad" id="notepad" hidden></section>
+      </main>
+
+      <section class="instrument" id="instrument">
+        <div class="fallboard">
+          <div class="fb-left" id="fb-left"></div>
+          <div class="fb-brand">Nocturne</div>
+          <div class="fb-right" id="fb-right"></div>
+        </div>
+        <div class="felt"></div>
+        <div class="keybed-wrap">
+          <div class="wheels" id="wheels">
+            <div class="wheel-wrap"><div class="wheel" id="wheel-pitch" title="Pitch bend — drag up or down"><span></span></div><small>Pitch</small></div>
+            <div class="wheel-wrap"><div class="wheel" id="wheel-mod" title="Modulation (vibrato) — drag up"><span></span></div><small>Mod</small></div>
+          </div>
+          <button class="range-arrow" id="range-left" title="Scroll keys lower"></button>
+          <div class="cheek left"></div>
+          <div class="keybed" id="keybed"></div>
+          <div class="cheek right"></div>
+          <button class="range-arrow" id="range-right" title="Scroll keys higher"></button>
+        </div>
+      </section>
+
+      <footer class="statusbar" id="statusbar"></footer>
+    </div>
+
+    <div class="loader" id="loader">
+      <div class="loader-card">
+        <div class="loader-keys"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="loader-title">Warming up piano</div>
+        <div class="loader-bar"><span id="loader-bar"></span></div>
+        <div class="loader-note" id="loader-note">Loading the Concert Grand…</div>
+      </div>
+    </div>
+    <div class="toasts" id="toasts"></div>
+    <div class="modal-host" id="modal-host"></div>
+  </body>
+</html>

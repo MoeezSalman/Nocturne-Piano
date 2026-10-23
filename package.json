@@ -1,0 +1,63 @@
+{
+  "name": "nocturne-piano",
+  "productName": "Nocturne Piano",
+  "version": "1.0.0",
+  "description": "A desktop virtual piano with 160+ instrument sounds, songs, metronome, notepad and a 4-track recorder.",
+  "author": "moeez",
+  "license": "MIT",
+  "type": "module",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "node scripts/dev-server.cjs",
+    "sounds": "node scripts/download-sounds.js",
+    "check-songs": "node scripts/check-songs.js",
+    "icon": "node scripts/make-icon.js",
+    "postinstall": "node scripts/vendor.js",
+    "pack": "node scripts/pack-win.js",
+    "install-app": "node scripts/pack-win.js --shortcuts",
+    "installer": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.nocturne.piano",
+    "productName": "Nocturne Piano",
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "lib/**",
+      "src/**",
+      "build/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "sounds",
+        "to": "sounds",
+        "filter": [
+          "**/*",
+          "!**/*.part"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Nocturne Piano"
+    }
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
+    "@tonejs/midi": "^2.0.28",
+    "lamejs": "^1.2.1"
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3"
+  }
+}
