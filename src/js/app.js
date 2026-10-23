@@ -99,7 +99,7 @@ class App extends Emitter {
     this._mountDrawer('metronome', createMetronomePanel(this));
     this._mountDrawer('recorder', createRecorderPanel(this));
     this._mountDrawer('studio', createStudioPanel(this));
-    installFeatures(this);
+    this.setLearnMarks = () => {};
     this._mountDrawer('learn', createLearnPanel(this));
     this.notepad = createNotepad(this);
     this.songPlayer = new SongPlayer(this);
