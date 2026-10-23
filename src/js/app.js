@@ -99,6 +99,7 @@ class App extends Emitter {
     this._mountDrawer('metronome', createMetronomePanel(this));
     this._mountDrawer('recorder', createRecorderPanel(this));
     this._mountDrawer('studio', createStudioPanel(this));
+    installFeatures(this);
     this._mountDrawer('learn', createLearnPanel(this));
     this.notepad = createNotepad(this);
     this.songPlayer = new SongPlayer(this);
@@ -106,7 +107,6 @@ class App extends Emitter {
     this.songPlayer.on('close', () => this._syncHero());
 
     this._bindKeys();
-    installFeatures(this);
     this._syncHero();
     await this._loadFirstInstrument();
     this.midi.init().then(() => this.midi.select(store.get('midiDevice')));
